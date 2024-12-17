@@ -2,16 +2,11 @@ import React from "react";
 import Task from "./Task";
 import { useState } from "react";
 
-function TaskList({tasks}) {
-  const [ taskList, setTaskList] = useState(tasks)
-
-  const removeTask = (taskId) => {
-    setTaskList(taskList.filter(task => task.id !== taskId))
-  };
+function TaskList({tasks, key, removeTask}) {
 
   return (
     <div className="tasks">
-      {taskList.map( task => (
+      {tasks.map( task => (
         <li key= {task.id}>
           <Task 
           id={task.id}
