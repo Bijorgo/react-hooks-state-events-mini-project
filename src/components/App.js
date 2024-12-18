@@ -8,24 +8,28 @@ import { CATEGORIES, TASKS } from "../data";
 
 
 function App() {
+  // set states for use in components
   const [ selectedCategory, setSelectedCategory ] = useState("All")
   const [ tasksInList, setTasksInList] = useState(TASKS)
 
- 
+  function onTaskFormSubmit(formData) {
+    setTasksInList([...tasksInList, formData])
+  }
+
+  // filter task list based on filter selection
   const filteredTasks = tasksInList.filter(task => {
-    if (selectedCategory === "All")
-      return true;
+    if (selectedCategory === "All") return true;
     return task.category === selectedCategory
   })
 
+
+  // callback function to remove a task 
   const removeTask = (taskId) => {
     setTasksInList(tasksInList.filter(task => task.id !== taskId))
   };
- /*
-  const addTask = (newTask) => {
-    setTasksInList([...tasksInList, newTask])
-  }
-*/
+
+
+  // app component return below
   return (
     <div className="App">
       <h2>My tasks</h2>
@@ -36,6 +40,7 @@ function App() {
         />
       <NewTaskForm 
         categories={CATEGORIES}
+        onTaskFormSubmit={onTaskFormSubmit}
       />
       <TaskList 
         tasks= {filteredTasks}
